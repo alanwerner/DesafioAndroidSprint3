@@ -1,9 +1,11 @@
 package com.example.catalagofilmes.ui.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.catalagofilmes.R
@@ -12,7 +14,7 @@ import com.example.catalagofilmes.model.Filme
 class ListaFilmesAdapter(
     private val context: Context,
     filmes: List<Filme> = emptyList()
-) : RecyclerView.Adapter<ListaFilmesAdapter.ViewHolder>(){
+) : RecyclerView.Adapter<ListaFilmesAdapter.ViewHolder>() {
 
     private val filmes = filmes.toMutableList()
 
@@ -21,9 +23,8 @@ class ListaFilmesAdapter(
         private lateinit var filme: Filme
 
         fun vincula(filme: Filme) {
-            this.filme = filme
-            val imagemFilme = itemView.findViewById<TextView>(R.id.nota_item_imagem)
-            imagemFilme.visibility = View.GONE
+
+
 
         }
     }
@@ -41,10 +42,9 @@ class ListaFilmesAdapter(
 
     override fun getItemCount(): Int = filmes.size
 
-    fun atualiza(notas: List<Filme>) {
-        notifyItemRangeRemoved(0, this.filmes.size)
+    fun atualiza(filmes: List<Filme>) {
         this.filmes.clear()
-        this.filmes.addAll(notas)
-        notifyItemInserted(this.filmes.size)
+        this.filmes.addAll(filmes)
+        notifyDataSetChanged()
     }
 }

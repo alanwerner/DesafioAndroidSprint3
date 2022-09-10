@@ -31,6 +31,4 @@ data class Filme(
             vote_average ?: 0,
             vote_count ?: 0
         )
-
-
 }
