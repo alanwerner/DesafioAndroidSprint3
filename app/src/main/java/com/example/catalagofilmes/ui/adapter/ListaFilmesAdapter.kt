@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.catalagofilmes.R
 import com.example.catalagofilmes.model.Filme
 
@@ -24,7 +25,8 @@ class ListaFilmesAdapter(
 
         fun vincula(filme: Filme) {
 
-
+            val imagem = itemView.findViewById<ImageView>(R.id.filme_item_imagem)
+            Glide.with(imagem).load("https://image.tmdb.org/t/p/w500${filme.poster_path}").into(imagem)
 
         }
     }
