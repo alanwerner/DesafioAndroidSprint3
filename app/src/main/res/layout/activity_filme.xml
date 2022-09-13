@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.FilmeActivity">
+
+    <ImageView
+        android:id="@+id/activity_filme_imagem"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/activity_filme_titulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_filme_imagem"
+        tools:text="Título" />
+
+    <TextView
+        android:id="@+id/activity_filme_lancamento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_filme_explicit"
+        app:layout_constraintStart_toStartOf="@+id/activity_filme_titulo"
+        app:layout_constraintTop_toBottomOf="@+id/activity_filme_titulo"
+        tools:text="2022-08-11" />
+
+    <ImageView
+        android:id="@+id/activity_filme_explicit"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintEnd_toEndOf="@+id/activity_filme_titulo"
+        app:layout_constraintTop_toBottomOf="@+id/activity_filme_titulo"
+        app:srcCompat="@drawable/ic_baseline_explicit_24"/>
+
+    <TextView
+        android:id="@+id/activity_filme_sinapse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:layout_margin="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/activity_filme_lancamento"
+        tools:text="For best friends Becky and Hunter, life is all about conquering fears and pushing limits. But after they climb 2,000 feet to the top of a remote, abandoned radio tower, they find themselves stranded with no way down. Now Becky and Hunter’s expert climbing skills will be put to the ultimate test as they desperately fight to survive the elements, a lack of supplies, and vertigo-inducing heights." />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
