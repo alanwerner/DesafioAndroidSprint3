@@ -8,7 +8,7 @@
 
     <ImageView
         android:id="@+id/activity_filme_imagem"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="200dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -45,7 +45,8 @@
         android:layout_height="24dp"
         app:layout_constraintEnd_toEndOf="@+id/activity_filme_titulo"
         app:layout_constraintTop_toBottomOf="@+id/activity_filme_titulo"
-        app:srcCompat="@drawable/ic_baseline_explicit_24"/>
+        app:srcCompat="@drawable/ic_baseline_explicit_24"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/activity_filme_sinapse"

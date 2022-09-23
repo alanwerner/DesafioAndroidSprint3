@@ -1,7 +1,9 @@
 package com.example.catalagofilmes.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -11,11 +13,12 @@ import com.example.catalagofilmes.R
 import com.example.catalagofilmes.model.Filme
 import com.example.catalagofilmes.ui.adapter.ListaFilmesAdapter
 import com.example.catalagofilmes.webclient.filmeWebClient
+import java.io.Serializable
 
 class ListaFilmesActivity : AppCompatActivity() {
 
     private val adapter by lazy {
-        ListaFilmesAdapter(this)
+        ListaFilmesAdapter()
     }
 
     private val dataSource by lazy {
@@ -36,7 +39,7 @@ class ListaFilmesActivity : AppCompatActivity() {
                         arrayListFilmes.addAll(response.results!!)
                     }
                 } catch (e: Exception) {
-                    Log.e("ErroArrayList", "onCreate: $e")
+                    Toast.makeText(this@ListaFilmesActivity, "Conexão com a internet não encontrada!", Toast.LENGTH_SHORT).show()
                 }
                 configuraRecyclerView()
             }
@@ -47,5 +50,10 @@ class ListaFilmesActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.activity_lista_filmes_recyclerView)
         recyclerView.adapter = adapter
         adapter.atualiza(arrayListFilmes)
+        adapter.itemClickListener = {
+            val intent = Intent(this, FilmeActivity::class.java)
+            intent.putExtra("Filme", it as Serializable)
+            startActivity(intent)
+        }
     }
 }
