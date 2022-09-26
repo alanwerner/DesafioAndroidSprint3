@@ -7,9 +7,9 @@ import java.lang.Exception
 class filmeWebClient {
     private val filmesService: FilmesService = RetrofitInicializador().filmesService
 
-    suspend fun buscaTodos(): FilmeResposta? {
+    suspend fun buscaTodos(page : Int): FilmeResposta? {
         return try {
-            val response = filmesService.buscaTodos()
+            val response = filmesService.buscaTodos(page = page)
             if (response.isSuccessful) {
                 response.body()
             } else {
