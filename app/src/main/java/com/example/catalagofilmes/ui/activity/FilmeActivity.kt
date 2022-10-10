@@ -8,7 +8,6 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.catalagofilmes.R
 import com.example.catalagofilmes.model.Filme
-import com.example.catalagofilmes.webclient.filmeWebClient
 
 class FilmeActivity : AppCompatActivity(R.layout.activity_filme) {
 

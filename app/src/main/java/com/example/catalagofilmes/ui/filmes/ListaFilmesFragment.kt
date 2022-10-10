@@ -1,27 +1,33 @@
-package com.example.catalagofilmes.ui.activity
+package com.example.catalagofilmes.ui.filmes
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ProgressBar
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.catalagofilmes.R
+import com.example.catalagofilmes.databinding.FragmentListaFilmesBinding
 import com.example.catalagofilmes.model.Filme
+import com.example.catalagofilmes.ui.activity.FilmeActivity
 import com.example.catalagofilmes.ui.adapter.ListaFilmesAdapter
 import com.example.catalagofilmes.webclient.filmeWebClient
 import kotlinx.coroutines.launch
 import java.io.Serializable
 
-class ListaFilmesActivity : AppCompatActivity() {
+class ListaFilmesFragment : Fragment() {
 
+    private var _binding: FragmentListaFilmesBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
     private val adapter by lazy {
         ListaFilmesAdapter()
     }
@@ -32,16 +38,31 @@ class ListaFilmesActivity : AppCompatActivity() {
 
     private var page = 1
     private val arrayListFilmes: ArrayList<Filme> = arrayListOf()
-    private lateinit var escutaLista : RecyclerView.OnScrollListener
+    private lateinit var escutaLista: RecyclerView.OnScrollListener
     private lateinit var recyclerView: RecyclerView
+
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val homeViewModel =
+            ViewModelProvider(this).get(ListaFilmesViewModel::class.java)
+
+        _binding = FragmentListaFilmesBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+        return root
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_lista_filmes)
 
         lifecycleScope.launchWhenStarted {
             lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                recyclerView = findViewById(R.id.activity_lista_filmes_recyclerView)
+                recyclerView = binding.activityListaFilmesRecyclerView
                 buscaFilmesComPaginacao()
                 configuraRecyclerView()
             }
@@ -58,14 +79,14 @@ class ListaFilmesActivity : AppCompatActivity() {
                 removeScrollListener()
                 addScrollListener()
             }
-            findViewById<ProgressBar>(R.id.activity_lista_filme_ProgressBar).visibility = View.GONE
+            binding.activityListaFilmeProgressBar.visibility = View.GONE
         } catch (e: Exception) {
             Toast.makeText(
-                this@ListaFilmesActivity,
+                context,
                 "Conexão com a internet não encontrada!",
                 Toast.LENGTH_SHORT
             ).show()
-            findViewById<ProgressBar>(R.id.activity_lista_filme_ProgressBar).visibility = View.GONE
+            binding.activityListaFilmeProgressBar.visibility = View.GONE
         }
     }
 
@@ -111,9 +132,14 @@ class ListaFilmesActivity : AppCompatActivity() {
     private fun configuraRecyclerView() {
         recyclerView.adapter = adapter
         adapter.itemClickListener = {
-            val intent = Intent(this, FilmeActivity::class.java)
+            val intent = Intent(context, FilmeActivity::class.java)
             intent.putExtra("Filme", it as Serializable)
             startActivity(intent)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
