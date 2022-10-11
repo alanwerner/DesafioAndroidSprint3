@@ -39,7 +39,7 @@ class ListaFilmesFragment : Fragment() {
     private var page = 1
     private val arrayListFilmes: ArrayList<Filme> = arrayListOf()
     private lateinit var escutaLista: RecyclerView.OnScrollListener
-    private lateinit var recyclerView: RecyclerView
+
 
 
 
@@ -57,12 +57,10 @@ class ListaFilmesFragment : Fragment() {
         return root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        lifecycleScope.launchWhenStarted {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.CREATED) {
-                recyclerView = binding.activityListaFilmesRecyclerView
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 buscaFilmesComPaginacao()
                 configuraRecyclerView()
             }
@@ -115,12 +113,12 @@ class ListaFilmesFragment : Fragment() {
                 }
             }
         }
-        recyclerView.addOnScrollListener(escutaLista)
+        binding.activityListaFilmesRecyclerView.addOnScrollListener(escutaLista)
     }
 
     private fun removeScrollListener() {
         if (::escutaLista.isInitialized){
-            recyclerView.removeOnScrollListener(escutaLista)
+            binding.activityListaFilmesRecyclerView.removeOnScrollListener(escutaLista)
         }
     }
 
@@ -130,7 +128,7 @@ class ListaFilmesFragment : Fragment() {
     }
 
     private fun configuraRecyclerView() {
-        recyclerView.adapter = adapter
+        binding.activityListaFilmesRecyclerView.adapter = adapter
         adapter.itemClickListener = {
             val intent = Intent(context, FilmeActivity::class.java)
             intent.putExtra("Filme", it as Serializable)

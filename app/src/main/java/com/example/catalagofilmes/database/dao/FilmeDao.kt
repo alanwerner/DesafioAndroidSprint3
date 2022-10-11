@@ -9,8 +9,8 @@ import com.example.catalagofilmes.model.Filme
 @Dao
 interface FilmeDao {
     @Insert(onConflict = IGNORE)
-    suspend fun salva(filme: Filme)
+    fun salva(filme: Filme)
 
     @Query("SELECT * FROM Filme")
-    suspend fun buscaFavoritos(): List<Filme>
+    fun buscaFilmes(): List<Filme>
 }
