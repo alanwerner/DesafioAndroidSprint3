@@ -5,16 +5,21 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.catalagofilmes.R
+import com.example.catalagofilmes.database.AppDaatabase
+import com.example.catalagofilmes.database.dao.FilmeDao
 import com.example.catalagofilmes.model.Filme
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.launch
 
 class FilmeActivity : AppCompatActivity(R.layout.activity_filme) {
-
+    private lateinit var dao: FilmeDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        dao = AppDaatabase.AppDatabase.instancia(this).filmeDao()
         val filme = intent.getSerializableExtra("Filme") as Filme
 
         val imagem = findViewById<ImageView>(R.id.activity_filme_imagem)
@@ -22,6 +27,7 @@ class FilmeActivity : AppCompatActivity(R.layout.activity_filme) {
         val lancamento = findViewById<TextView>(R.id.activity_filme_lancamento)
         val explicit = findViewById<ImageView>(R.id.activity_filme_explicit)
         val sinapse = findViewById<TextView>(R.id.activity_filme_sinapse)
+
 
         if (filme != null) {
             if (filme.backdrop_path != "") {

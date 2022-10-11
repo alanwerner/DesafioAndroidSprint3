@@ -9,7 +9,7 @@
     app:cardCornerRadius="8dp">
 
     <ImageView
-        android:id="@+id/filme_item_imagem"
+        android:id="@+id/filme_item_favoritos_imagem"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:scaleType="centerCrop"

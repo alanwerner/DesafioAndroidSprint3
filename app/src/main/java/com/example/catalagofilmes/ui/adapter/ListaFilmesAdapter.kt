@@ -1,13 +1,10 @@
 package com.example.catalagofilmes.ui.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
@@ -28,7 +25,7 @@ class ListaFilmesAdapter() : RecyclerView.Adapter<ListaFilmesAdapter.ViewHolder>
             itemView.rootView.setOnClickListener{
                 itemClickListener.invoke(filme)
             }
-            val imagem = itemView.findViewById<ImageView>(R.id.filme_item_imagem)
+            val imagem = itemView.findViewById<ImageView>(R.id.filme_item_favoritos_imagem)
             Glide.with(imagem).load("https://image.tmdb.org/t/p/w500${filme.poster_path}").placeholder(loadCircularProgress(imagem.context)).into(imagem)
 
         }

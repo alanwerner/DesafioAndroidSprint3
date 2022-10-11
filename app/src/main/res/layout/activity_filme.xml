@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="?android:attr/windowBackground"
     tools:context=".ui.activity.FilmeActivity">
 
     <ImageView
@@ -58,5 +59,20 @@
         android:textSize="15sp"
         app:layout_constraintTop_toBottomOf="@+id/activity_filme_lancamento"
         tools:text="For best friends Becky and Hunter, life is all about conquering fears and pushing limits. But after they climb 2,000 feet to the top of a remote, abandoned radio tower, they find themselves stranded with no way down. Now Becky and Hunter’s expert climbing skills will be put to the ultimate test as they desperately fight to survive the elements, a lack of supplies, and vertigo-inducing heights." />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/activity_filme_fab_favoritos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_filme_imagem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_baseline_star_24"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
+        android:backgroundTint="#00000000"
+        app:backgroundTint="#00000000"
+        app:elevation="0dp"
+        app:borderWidth="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,31 +2,49 @@ package com.example.catalagofilmes.database
 
 import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
+import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
 import com.example.catalagofilmes.database.dao.FilmeDao
 import com.example.catalagofilmes.model.Filme
 
-@Database(
-    version = 1,
-    entities = [Filme::class],
-    exportSchema = true
-)
-abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun filmeDao(): FilmeDao
+class AppDaatabase {
 
-    companion object {
-        @Volatile
-        private var db: AppDatabase? = null
+    @Database(
+        version = 1,
+        entities = [Filme::class],
+        exportSchema = false
+    )
 
-        fun instancia(context: Context): AppDatabase {
-            return db ?: Room.databaseBuilder(
-                context,
-                AppDatabase::class.java,
-                "ceep.db"
-            ).build()
+    abstract class AppDatabase : RoomDatabase() {
+
+        abstract fun filmeDao(): FilmeDao
+
+        companion object factory {
+
+            private lateinit var db: AppDatabase
+
+            fun instancia(context: Context): AppDatabase {
+                if (::db.isInitialized) return db
+                db = databaseBuilder(context, AppDatabase::class.java, "AppDatabase.db")
+                    .addMigrations(Migration(1, 2) {
+                        it.execSQL("DROP TABLE IF EXISTS 'Filme'")
+                        it.execSQL(
+                            "CREATE TABLE IF NOT EXISTS Filme (" +
+                                    "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                                    "title TEXT NOT NULL, " +
+                                    "original_language TEXT NOT NULL, " +
+                                    "poster_path TEXT NOT NULL, " +
+                                    "overview TEXT NOT NULL, " +
+                                    "release_date TEXT NOT NULL, " +
+                                    "backdrop_path TEXT NOT NULL)"
+                        );
+                    })
+                    .allowMainThreadQueries()
+                    .build()
+                return db
+            }
         }
     }
-
 }

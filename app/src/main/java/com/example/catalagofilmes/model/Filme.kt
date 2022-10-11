@@ -1,21 +1,26 @@
 package com.example.catalagofilmes.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.io.Serializable
 
+@Entity
 data class Filme(
     val backdrop_path: String?,
     val adult: Boolean?,
+    @PrimaryKey
     val id: Int?,
     val original_language: String?,
     val original_title: String?,
     val overview: String?,
-    val popularity: Number?,
+    val popularity: Int?,
     val poster_path: String?,
     val release_date: String?,
     val title: String?,
     val video: Boolean?,
-    val vote_average: Number?,
-    val vote_count: Int?
+    val vote_average: Float?,
+    val vote_count: Int?,
+    val selected : Boolean
 ) : Serializable {
     val filme: Filme
         get() = Filme(
@@ -30,7 +35,8 @@ data class Filme(
             release_date?: "",
             title ?: "",
             video ?: false,
-            vote_average ?: 0,
-            vote_count ?: 0
+            vote_average ?: 0f,
+            vote_count ?: 0,
+            selected ?: false,
         )
 }

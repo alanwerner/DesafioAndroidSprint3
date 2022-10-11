@@ -1,14 +1,16 @@
 package com.example.catalagofilmes.database.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.Query
 import com.example.catalagofilmes.model.Filme
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FilmeDao {
+    @Insert(onConflict = IGNORE)
+    suspend fun salva(filme: Filme)
 
     @Query("SELECT * FROM Filme")
-    fun buscaTodos() : Flow<List<Filme>>
-
+    suspend fun buscaFavoritos(): List<Filme>
 }
