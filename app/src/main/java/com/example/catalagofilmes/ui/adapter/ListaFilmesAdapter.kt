@@ -1,6 +1,7 @@
 package com.example.catalagofilmes.ui.adapter
 
 import android.content.Context
+import android.icu.text.Transliterator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +17,9 @@ import com.example.catalagofilmes.model.Filme
 
 class ListaFilmesAdapter() : RecyclerView.Adapter<ListaFilmesAdapter.ViewHolder>() {
 
-    private val filmes = arrayListOf<Filme>()
+    val filmes = arrayListOf<Filme>()
     lateinit var itemClickListener: (filme : Filme) -> Unit
+    lateinit var longClickListener: (position : Int) ->Unit
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -27,9 +29,16 @@ class ListaFilmesAdapter() : RecyclerView.Adapter<ListaFilmesAdapter.ViewHolder>
             }
             val imagem = itemView.findViewById<ImageView>(R.id.filme_item_favoritos_imagem)
             Glide.with(imagem).load("https://image.tmdb.org/t/p/w500${filme.poster_path}").placeholder(loadCircularProgress(imagem.context)).into(imagem)
-
+            itemView.rootView.setOnLongClickListener {
+                longClickListener.invoke(adapterPosition)
+                false
+            }
         }
+    }
 
+    fun deleta(position: Int){
+        filmes.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     private fun loadCircularProgress(context: Context): CircularProgressDrawable {

@@ -11,13 +11,20 @@ import com.example.catalagofilmes.R
 import com.example.catalagofilmes.database.AppDatabase
 import com.example.catalagofilmes.database.dao.FilmeDao
 import com.example.catalagofilmes.model.Filme
+import com.example.catalagofilmes.repository.Repository
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
 class FilmeActivity : AppCompatActivity(R.layout.activity_filme) {
 
+    private lateinit var dao : FilmeDao
+    private val repository by lazy {
+        Repository(dao)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        dao = AppDatabase.getInstance(this@FilmeActivity).filmeDao()
         val filme = intent.getSerializableExtra("Filme") as Filme
 
         val imagem = findViewById<ImageView>(R.id.activity_filme_imagem)
@@ -28,9 +35,11 @@ class FilmeActivity : AppCompatActivity(R.layout.activity_filme) {
         val fabFavoritos = findViewById<FloatingActionButton>(R.id.activity_filme_fab_favoritos)
         fabFavoritos.setOnClickListener(View.OnClickListener {
             lifecycleScope.launch {
-                AppDatabase.getInstance(this@FilmeActivity).filmeDao().salva(filme)
+                repository.salva(filme)
             }
         })
+
+
 
         if (filme != null) {
             if (filme.backdrop_path != "") {
